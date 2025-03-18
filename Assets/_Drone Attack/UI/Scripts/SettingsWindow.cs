@@ -25,7 +25,6 @@ namespace _Drone_Attack.UI.Scripts
         private void OnEnable()
         {
             ShowSwitcherStatus(_settingsService.SoundStatus, ref _switcherSoundImage, ref _switcherSoundText);
-            ShowSwitcherStatus(_settingsService.InvertControlStatus, ref _switcherInvertImage, ref _switcherInvertText);
         }
 
         public void ChangeSoundStatus()
@@ -35,15 +34,6 @@ namespace _Drone_Attack.UI.Scripts
             ShowSwitcherStatus(value, ref _switcherSoundImage, ref _switcherSoundText);
             
             _settingsService.SoundStatus = value;
-        }
-        
-        public void ChangeInvertControlStatus()
-        {
-            bool value = !_settingsService.InvertControlStatus;
-            
-            ShowSwitcherStatus(value, ref _switcherInvertImage, ref _switcherInvertText);
-            
-            _settingsService.InvertControlStatus = value;
         }
 
         private void ShowSwitcherStatus(bool value, ref Image switcherImage, ref TMP_Text switcherText)

@@ -7,8 +7,10 @@ namespace _Drone_Attack.Configs.Sources
     {
         [SerializeField] private GameObject _playerPrefab;
         [SerializeField] private float _health;
+        [SerializeField] private float _speed;
         
         public GameObject PlayerPrefab => _playerPrefab;
         public float Health => _health;
+        public float Speed => _speed;
     }
 }

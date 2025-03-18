@@ -9,7 +9,7 @@ namespace _Drone_Attack.Infrastructure.Scripts.Services
         
         public override Vector2 MoveAxis => UnityMoveAxis();
         public override Vector2 RotateAxis => UnityRotateAxis();
-        public override bool Interact => Input.GetButtonDown(INTERACT_BUTTON);
+        public override bool Interact => Input.GetButton(INTERACT_BUTTON);
         public override bool SwitchWeapon => Input.GetButtonDown(SWITCH_WEAPON);
         public override bool UseAbility => Input.GetButtonDown(USE_ABILITY);
 

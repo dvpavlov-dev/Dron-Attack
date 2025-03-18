@@ -17,19 +17,7 @@ namespace _Drone_Attack.Infrastructure.Scripts.Services
             }
         }
 
-        public bool InvertControlStatus
-        {
-            get => _invertControlStatus;
-            set
-            {
-                _invertControlStatus = value;
-                OnInvertControlStatusChanged?.Invoke();
-                SaveSettings();
-            }
-        }
-
         public Action OnSoundStatusChanged;
-        public Action OnInvertControlStatusChanged;
         
         private bool _soundStatus;
         private bool _invertControlStatus;
@@ -42,7 +30,6 @@ namespace _Drone_Attack.Infrastructure.Scripts.Services
         private void SaveSettings()
         {
             PlayerPrefs.SetInt("SOUND", SoundStatus ? 1 : 0);
-            PlayerPrefs.SetInt("INVERT_CONTROL", InvertControlStatus ? 1 : 0);
             
             PlayerPrefs.Save();
         }
@@ -50,7 +37,6 @@ namespace _Drone_Attack.Infrastructure.Scripts.Services
         private void LoadSettings()
         {
             SoundStatus = PlayerPrefs.GetInt("SOUND") == 1;
-            InvertControlStatus = PlayerPrefs.GetInt("INVERT_CONTROL") == 1;
         }
     }
 }

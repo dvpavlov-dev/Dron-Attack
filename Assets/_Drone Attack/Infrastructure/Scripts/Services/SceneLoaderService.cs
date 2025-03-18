@@ -44,5 +44,4 @@ namespace _Drone_Attack.Infrastructure.Scripts.Services
             _disposable.Dispose();
         }
     }
-
 }

@@ -1,4 +1,4 @@
-﻿namespace _Drone_Attack.Infrastructure.Scripts
+﻿namespace _Drone_Attack.Infrastructure.Scripts.Services
 {
     public class LevelProgressService : ILevelProgressService
     {

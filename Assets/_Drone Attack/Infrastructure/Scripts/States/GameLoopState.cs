@@ -1,9 +1,6 @@
-﻿using _Drone_Attack.Infrastructure.Scripts.Factories;
-using _Drone_Attack.Infrastructure.Scripts.Services;
+﻿using _Drone_Attack.Infrastructure.Scripts.Services;
 using _Drone_Attack.UI.Scripts;
-using R3;
 using Shot_Shift.Infrastructure.Scripts;
-using UnityEngine;
 
 namespace _Drone_Attack.Infrastructure.Scripts.States
 {
@@ -12,20 +9,15 @@ namespace _Drone_Attack.Infrastructure.Scripts.States
         private readonly ILevelProgressService _levelProgressService;
         private readonly ILoadingCurtains _loadingCurtains;
         private readonly ISceneLoaderService _sceneLoaderService;
-        private readonly IActorsFactory _actorsFactory;
-        private readonly IWeaponsFactory _weaponsFactory;
+
 
         public GameLoopState(ILevelProgressService levelProgressService, 
             ILoadingCurtains loadingCurtains, 
-            ISceneLoaderService sceneLoaderService, 
-            IActorsFactory actorsFactory,
-            IWeaponsFactory weaponsFactory)
+            ISceneLoaderService sceneLoaderService)
         {
             _levelProgressService = levelProgressService;
             _loadingCurtains = loadingCurtains;
             _sceneLoaderService = sceneLoaderService;
-            _actorsFactory = actorsFactory;
-            _weaponsFactory = weaponsFactory;
         }
 
         public void Enter()
@@ -39,24 +31,9 @@ namespace _Drone_Attack.Infrastructure.Scripts.States
             
         }
 
-        private void OnInitializedEnded()
-        {
-            _loadingCurtains.HideLoadingCurtains();
-            _levelProgressService.LevelProgressWatcher.RunLevel();
-        }
-
         private void OnLoadedScene()
         {
-            _loadingCurtains.UpdateDescriptionText("Loading enemies...");
-            _actorsFactory.InitializeFactory().Subscribe(_ =>
-            {
-                _loadingCurtains.UpdateDescriptionText("Loading bullets...");
-                _weaponsFactory.InitializeFactory().Subscribe(_ =>
-                {
-                    Debug.Log("Метод 2 завершен!");
-                    OnInitializedEnded();
-                });
-            });
+            _levelProgressService.LevelProgressWatcher.RunLevel();
         }
     }
 }

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Drone Attack/Scenes/GameLoop.unity
     guid: f828472892cba3044933a62f3e0c8509
+  - enabled: 1
+    path: Assets/_Drone Attack/Scenes/Test.unity
+    guid: 289595cf4e4378543998222e69d5983a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

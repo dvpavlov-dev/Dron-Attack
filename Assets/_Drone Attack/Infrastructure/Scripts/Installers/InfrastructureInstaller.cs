@@ -11,7 +11,7 @@ namespace _Drone_Attack.Infrastructure.Scripts.Installers
     
         public override void InstallBindings()
         {
-            Container.Bind<Configs>().FromInstance(_configs);
+            Container.Bind<Configs>().FromInstance(_configs).AsSingle().NonLazy();
         
             BindServices();
             BindFactories();

@@ -3,6 +3,7 @@ using _Drone_Attack.Configs.Sources;
 using _Drone_Attack.Gameplay.Weapon.Scripts;
 using _Drone_Attack.Infrastructure.Scripts.Factories;
 using _Drone_Attack.Infrastructure.Scripts.Services;
+using _Drone_Attack.UI.Scripts;
 using _Drone_Attack.UI.Scripts.GameLoopScene;
 using R3;
 using UnityEngine;
@@ -23,10 +24,20 @@ namespace _Drone_Attack.Infrastructure.Scripts
         private CompositeDisposable _disposable = new();
         private IDamageable _playerDamageable;
         private IDisposable _timerObserver;
+        private ILoadingCurtains _loadingCurtains;
+        private IWeaponsFactory _weaponsFactory;
 
         [Inject]
-        private void Construct(IActorsFactory actorsFactory, Configs configs, PlayerProgressService playerProgressService, PauseService pauseService)
+        private void Construct(
+            IActorsFactory actorsFactory, 
+            Configs configs, 
+            PlayerProgressService playerProgressService, 
+            PauseService pauseService,
+            ILoadingCurtains loadingCurtains,
+            IWeaponsFactory weaponsFactory)
         {
+            _weaponsFactory = weaponsFactory;
+            _loadingCurtains = loadingCurtains;
             _pauseService = pauseService;
             _playerProgressService = playerProgressService;
             _configs = configs;
@@ -36,7 +47,23 @@ namespace _Drone_Attack.Infrastructure.Scripts
         public void RunLevel()
         {
             Debug.Log("LevelProgressWatcher.RunLevel");
+            
+            _loadingCurtains.UpdateDescriptionText("Loading enemies...");
+            _actorsFactory.InitializeFactory().Subscribe(_ =>
+            {
+                _loadingCurtains.UpdateDescriptionText("Loading bullets...");
+                _weaponsFactory.InitializeFactory().Subscribe(_ =>
+                {
+                    Debug.Log("Метод 2 завершен!");
+                    OnInitializedEnded();
+                });
+            });
+        }
 
+        private void OnInitializedEnded()
+        {
+            _loadingCurtains.HideLoadingCurtains();
+            
             LevelsConfigSource.Level currentLevelConfig = _configs.LevelsConfig.Levels[_playerProgressService.CurrentLevel];
             _pauseService.IsPaused = false;
             

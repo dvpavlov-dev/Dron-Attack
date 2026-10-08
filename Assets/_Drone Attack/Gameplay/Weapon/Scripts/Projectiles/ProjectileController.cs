@@ -41,6 +41,8 @@ namespace _Drone_Attack.Gameplay.Weapon.Scripts.Projectiles
         {
             if(!other.CompareTag("Projectile"))
             {
+                CreateHitEffect(other);
+
                 if (!other.CompareTag("Player"))
                 {
                     if (other.gameObject.GetComponent<IDamageable>() is {} damageable)
@@ -51,8 +53,6 @@ namespace _Drone_Attack.Gameplay.Weapon.Scripts.Projectiles
 
                     Dispose();
                 }
-
-                CreateHitEffect(other);
             }
         }
         
@@ -60,8 +60,12 @@ namespace _Drone_Attack.Gameplay.Weapon.Scripts.Projectiles
         {
             GameObject hitEffect = Instantiate(_hitEffectPrefab, transform.position, Quaternion.identity);
             Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);
-            Vector3 normal = (hitPoint - transform.position).normalized;
-            hitEffect.transform.rotation = Quaternion.LookRotation(normal);
+            Vector3 direction = hitPoint - transform.position;
+
+            if (direction.sqrMagnitude < 0.0001f)
+                direction = transform.right;
+
+            hitEffect.transform.rotation = Quaternion.LookRotation(direction);
         }
 
         protected void Dispose()
